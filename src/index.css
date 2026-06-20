@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-mono: 'Fira Code', 'Courier New', Courier, monospace;
+  
+  /* Light Theme Variables */
+  --bg-primary: #f8fafc;
+  --bg-secondary: #ffffff;
+  --bg-panel: rgba(255, 255, 255, 0.7);
+  --border-color: rgba(226, 232, 240, 0.8);
+  --text-primary: #0f172a;
+  --text-secondary: #475569;
+  --text-muted: #94a3b8;
+  --accent-color: #2563eb;
+  --accent-hover: #1d4ed8;
+  --accent-soft: rgba(37, 99, 235, 0.08);
+  --success-color: #10b981;
+  --shadow-sm: 0 2px 8px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 12px 20px -8px rgba(15, 23, 42, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --transition-fast: 0.12s ease;
+  --transition-normal: 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark, :root:not(.light) {
+  --bg-primary: #000000;          /* AMOLED Pure Black */
+  --bg-secondary: #0a0a0c;        /* Solid ultra-dark gray */
+  --bg-panel: #050507;            /* Terminal box black */
+  --border-color: #1f242e;        /* Clean thin cybertech borders */
+  --text-primary: #ffffff;        /* Pure bright white */
+  --text-secondary: #94a3b8;      /* Readable slate */
+  --text-muted: #4b5563;          /* Dimmed slate */
+  --accent-color: #00ff66;        /* Terminal Neon Green */
+  --accent-hover: #39ff14;        /* Hyper green */
+  --accent-soft: rgba(0, 255, 102, 0.06);
+  --success-color: #00ff66;
+  --shadow-sm: 0 0 0 1px #111111;
+  --shadow-md: 0 0 25px rgba(0, 255, 102, 0.03);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color var(--transition-normal), color var(--transition-normal);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Sidebar structure */
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 380px;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border-color);
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  box-shadow: var(--shadow-md);
+  transform: translateX(0);
+  transition: transform var(--transition-normal), background-color var(--transition-normal);
+  overflow-y: auto;
+}
+
+.sidebar-panel.collapsed {
+  transform: translateX(-380px);
+}
+
+/* Content adjustment based on sidebar state */
+.main-layout-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  margin-left: 380px;
+  transition: margin-left var(--transition-normal);
+}
+
+.main-layout-container.wide {
+  margin-left: 0;
+}
+
+/* Sidebar Toggle handle button */
+.sidebar-toggle-btn {
+  position: fixed;
+  left: 380px;
+  top: 20px;
+  z-index: 910;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  border-left: none;
+  color: var(--accent-color);
+  padding: 10px 14px;
+  border-radius: 0 8px 8px 0;
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-weight: 800;
+  font-size: 11px;
+  transition: left var(--transition-normal), color var(--transition-fast);
+  box-shadow: 4px 0 10px rgba(0,0,0,0.15);
+}
+
+.sidebar-toggle-btn.collapsed {
+  left: 0;
+}
+
+.sidebar-toggle-btn:hover {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+}
+
+/* Scrollbars in sidebar */
+.sidebar-panel::-webkit-scrollbar {
+  width: 6px;
+}
+.sidebar-panel::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}
+
+.dark .mono-terminal {
+  font-family: var(--font-mono);
+}
+
+/* Custom styled Range Inputs for Terminal */
+input[type="range"] {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 4px;
+  background: var(--border-color);
+  border-radius: 99px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  cursor: pointer;
+  box-shadow: 0 0 6px var(--accent-color);
+  transition: transform var(--transition-fast);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+}
+
+/* Glassmorphism panel or Cyber block */
+.glass-panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-md);
+  border-radius: var(--radius-md);
+  transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-panel:hover {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px rgba(0, 255, 102, 0.05);
+}
+
+/* Modal overlays for Terminal flat map */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.modal-content {
+  width: 100%;
+  max-width: 1100px;
+  background: var(--bg-panel);
+  border: 2px solid var(--accent-color);
+  border-radius: var(--radius-md);
+  box-shadow: 0 0 35px rgba(0, 255, 102, 0.15);
+  overflow: hidden;
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeInUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
